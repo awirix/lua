@@ -1,4 +1,4 @@
-module github.com/yuin/gopher-lua
+module github.com/vivi-app/lua
 
 go 1.17
 
