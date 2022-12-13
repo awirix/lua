@@ -109,6 +109,10 @@ type Options struct {
 	// If `MinimizeStackMemory` is set, the call stack will be automatically grown or shrank up to a limit of
 	// `CallStackSize` in order to minimize memory usage. This does incur a slight performance penalty.
 	MinimizeStackMemory bool
+	// Stdout used for print function. Defaults to os.Stdout.
+	Stdout io.Writer
+	// SafeMode disables the use of `load`, `loadfile`, `dofile`, `loadstring` functions. Defaults to false.
+	SafeMode bool
 }
 
 /* }}} */
@@ -1351,6 +1355,7 @@ func NewState(opts ...Options) *LState {
 		ls = newLState(Options{
 			CallStackSize: CallStackSize,
 			RegistrySize:  RegistrySize,
+			Stdout:        os.Stdout,
 		})
 		ls.OpenLibs()
 	} else {
