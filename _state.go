@@ -107,8 +107,6 @@ type Options struct {
 	MinimizeStackMemory bool
 	// Stdout used for print function. Defaults to os.Stdout.
 	Stdout io.Writer
-	// SafeMode disables the use of potentially unsafe functions. Defaults to false.
-	SafeMode bool
 }
 
 /* }}} */
