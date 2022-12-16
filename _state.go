@@ -107,6 +107,8 @@ type Options struct {
 	MinimizeStackMemory bool
 	// Stdout used for print function. Defaults to os.Stdout.
 	Stdout io.Writer
+	// WorkingDir is the working directory for the state. Defaults to current one.
+	WorkingDir string
 }
 
 /* }}} */
