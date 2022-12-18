@@ -7,7 +7,7 @@ import (
 )
 
 func TestCheckInt(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LNumber(10))
@@ -19,7 +19,7 @@ func TestCheckInt(t *testing.T) {
 }
 
 func TestCheckInt64(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LNumber(10))
@@ -31,7 +31,7 @@ func TestCheckInt64(t *testing.T) {
 }
 
 func TestCheckNumber(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LNumber(10))
@@ -43,7 +43,7 @@ func TestCheckNumber(t *testing.T) {
 }
 
 func TestCheckString(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LString("aaa"))
@@ -57,7 +57,7 @@ func TestCheckString(t *testing.T) {
 }
 
 func TestCheckBool(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LTrue)
@@ -69,7 +69,7 @@ func TestCheckBool(t *testing.T) {
 }
 
 func TestCheckTable(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		tbl := L.NewTable()
@@ -82,7 +82,7 @@ func TestCheckTable(t *testing.T) {
 }
 
 func TestCheckFunction(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		fn := L.NewFunction(func(l *LState) int { return 0 })
@@ -95,7 +95,7 @@ func TestCheckFunction(t *testing.T) {
 }
 
 func TestCheckUserData(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		ud := L.NewUserData()
@@ -108,7 +108,7 @@ func TestCheckUserData(t *testing.T) {
 }
 
 func TestCheckThread(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		th, _ := L.NewThread()
@@ -121,7 +121,7 @@ func TestCheckThread(t *testing.T) {
 }
 
 func TestCheckChannel(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		ch := make(chan LValue)
@@ -134,7 +134,7 @@ func TestCheckChannel(t *testing.T) {
 }
 
 func TestCheckType(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LNumber(10))
@@ -145,7 +145,7 @@ func TestCheckType(t *testing.T) {
 }
 
 func TestCheckTypes(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LNumber(10))
@@ -161,7 +161,7 @@ func TestCheckOption(t *testing.T) {
 		"opt2",
 		"opt3",
 	}
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		L.Push(LString("opt1"))
@@ -173,7 +173,7 @@ func TestCheckOption(t *testing.T) {
 }
 
 func TestOptInt(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		errorIfNotEqual(t, 99, L.OptInt(1, 99))
@@ -186,7 +186,7 @@ func TestOptInt(t *testing.T) {
 }
 
 func TestOptInt64(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		errorIfNotEqual(t, int64(99), L.OptInt64(1, int64(99)))
@@ -199,7 +199,7 @@ func TestOptInt64(t *testing.T) {
 }
 
 func TestOptNumber(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		errorIfNotEqual(t, LNumber(99), L.OptNumber(1, LNumber(99)))
@@ -212,7 +212,7 @@ func TestOptNumber(t *testing.T) {
 }
 
 func TestOptString(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		errorIfNotEqual(t, "bbb", L.OptString(1, "bbb"))
@@ -225,7 +225,7 @@ func TestOptString(t *testing.T) {
 }
 
 func TestOptBool(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		errorIfNotEqual(t, true, L.OptBool(1, true))
@@ -238,7 +238,7 @@ func TestOptBool(t *testing.T) {
 }
 
 func TestOptTable(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		deftbl := L.NewTable()
@@ -253,7 +253,7 @@ func TestOptTable(t *testing.T) {
 }
 
 func TestOptFunction(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		deffn := L.NewFunction(func(l *LState) int { return 0 })
@@ -268,7 +268,7 @@ func TestOptFunction(t *testing.T) {
 }
 
 func TestOptUserData(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		defud := L.NewUserData()
@@ -283,7 +283,7 @@ func TestOptUserData(t *testing.T) {
 }
 
 func TestOptChannel(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfGFuncNotFail(t, L, func(L *LState) int {
 		defch := make(chan LValue)
@@ -311,7 +311,7 @@ print("hello")
 		os.Remove(tmpFile.Name())
 	}()
 
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 
 	_, err = L.LoadFile(tmpFile.Name())
@@ -327,7 +327,7 @@ func TestLoadFileForEmptyFile(t *testing.T) {
 		os.Remove(tmpFile.Name())
 	}()
 
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 
 	_, err = L.LoadFile(tmpFile.Name())

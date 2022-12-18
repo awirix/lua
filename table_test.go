@@ -28,7 +28,7 @@ func TestTableLen(t *testing.T) {
 }
 
 func TestTableLenType(t *testing.T) {
-	L := NewState(Options{})
+	L := NewState(nil)
 	err := L.DoString(`
         mt = {
             __index = mt,

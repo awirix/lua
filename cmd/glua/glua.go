@@ -54,7 +54,7 @@ Available options are:
 
 	status := 0
 
-	L := lua.NewState()
+	L := lua.NewState(nil)
 	defer L.Close()
 	if opt_m > 0 {
 		L.SetMx(opt_m)

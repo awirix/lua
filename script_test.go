@@ -69,11 +69,7 @@ func testScriptDir(t *testing.T, tests []string, directory string) {
 	for _, script := range tests {
 		fmt.Printf("testing %s/%s\n", directory, script)
 		testScriptCompile(t, script)
-		L := NewState(Options{
-			RegistrySize:        1024 * 20,
-			CallStackSize:       1024,
-			IncludeGoStackTrace: true,
-		})
+		L := NewState(nil)
 		L.SetMx(maxMemory)
 		if err := L.DoFile(script); err != nil {
 			t.Error(err)
@@ -127,7 +123,7 @@ func TestLocalVarFree(t *testing.T) {
 		end
 		error("user datas not finalized after 100 gcs")
 `
-	L := NewState()
+	L := NewState(nil)
 	L.SetGlobal("allocFinalizer", L.NewFunction(allocFinalizerUserData))
 	L.SetGlobal("sleep", L.NewFunction(sleep))
 	L.SetGlobal("countFinalizers", L.NewFunction(countFinalizers))

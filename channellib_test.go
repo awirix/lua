@@ -9,7 +9,7 @@ import (
 )
 
 func TestChannelMake(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfScriptFail(t, L, `
     ch = channel.make()
@@ -30,7 +30,7 @@ func TestChannelMake(t *testing.T) {
 }
 
 func TestChannelSelectError(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfScriptFail(t, L, `ch = channel.make()`)
 	errorIfScriptNotFail(t, L, `channel.select({1,2,3})`, "invalid select case")
@@ -46,7 +46,7 @@ func TestChannelSelect1(t *testing.T) {
 	var wg sync.WaitGroup
 	receiver := func(ch, quit chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		L.SetGlobal("quit", LChannel(quit))
@@ -76,7 +76,7 @@ func TestChannelSelect1(t *testing.T) {
 
 	sender := func(ch, quit chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		L.SetGlobal("quit", LChannel(quit))
@@ -109,7 +109,7 @@ func TestChannelSelect2(t *testing.T) {
 	var wg sync.WaitGroup
 	receiver := func(ch, quit chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		L.SetGlobal("quit", LChannel(quit))
@@ -133,7 +133,7 @@ func TestChannelSelect2(t *testing.T) {
 
 	sender := func(ch, quit chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		L.SetGlobal("quit", LChannel(quit))
@@ -153,7 +153,7 @@ func TestChannelSelect3(t *testing.T) {
 	var wg sync.WaitGroup
 	receiver := func(ch chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		errorIfScriptFail(t, L, `
@@ -168,7 +168,7 @@ func TestChannelSelect3(t *testing.T) {
 
 	sender := func(ch chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		errorIfScriptFail(t, L, `
@@ -199,7 +199,7 @@ func TestChannelSelect4(t *testing.T) {
 	var wg sync.WaitGroup
 	receiver := func(ch chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		errorIfScriptFail(t, L, `
@@ -230,7 +230,7 @@ func TestChannelSendReceive1(t *testing.T) {
 	var wg sync.WaitGroup
 	receiver := func(ch chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		errorIfScriptFail(t, L, `
@@ -247,7 +247,7 @@ func TestChannelSendReceive1(t *testing.T) {
 	}
 	sender := func(ch chan LValue) {
 		defer wg.Done()
-		L := NewState()
+		L := NewState(nil)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(ch))
 		errorIfScriptFail(t, L, `ch:send("1")`)
@@ -266,7 +266,7 @@ func TestCancelChannelReceive(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
 		defer close(done)
-		L := NewState()
+		L := NewState(nil)
 		L.SetContext(ctx)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(make(chan LValue)))
@@ -282,7 +282,7 @@ func TestCancelChannelReceive2(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
 		defer close(done)
-		L := NewState()
+		L := NewState(nil)
 		L.SetContext(ctx)
 		defer L.Close()
 		L.SetGlobal("ch", LChannel(make(chan LValue)))

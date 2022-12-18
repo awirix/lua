@@ -8,15 +8,13 @@ import (
 )
 
 func TestLStateIsClosed(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	L.Close()
 	errorIfNotEqual(t, true, L.IsClosed())
 }
 
 func TestCallStackOverflowWhenFixed(t *testing.T) {
-	L := NewState(Options{
-		CallStackSize: 3,
-	})
+	L := NewState(nil)
 	defer L.Close()
 
 	// expect fixed stack implementation by default (for backwards compatibility)
@@ -40,10 +38,7 @@ func TestCallStackOverflowWhenFixed(t *testing.T) {
 }
 
 func TestCallStackOverflowWhenAutoGrow(t *testing.T) {
-	L := NewState(Options{
-		CallStackSize:       3,
-		MinimizeStackMemory: true,
-	})
+	L := NewState(nil)
 	defer L.Close()
 
 	// expect auto growing stack implementation when MinimizeStackMemory is set
@@ -67,17 +62,17 @@ func TestCallStackOverflowWhenAutoGrow(t *testing.T) {
 }
 
 func TestSkipOpenLibs(t *testing.T) {
-	L := NewState(Options{SkipOpenLibs: true})
+	L := NewState(nil)
 	defer L.Close()
 	errorIfScriptNotFail(t, L, `print("")`,
 		"attempt to call a non-function object")
-	L2 := NewState()
+	L2 := NewState(nil)
 	defer L2.Close()
 	errorIfScriptFail(t, L2, `print("")`)
 }
 
 func TestGetAndReplace(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LString("a"))
 	L.Replace(1, LString("b"))
@@ -118,7 +113,7 @@ func TestGetAndReplace(t *testing.T) {
 		return 0
 	}, "_G must be a table")
 
-	L2 := NewState()
+	L2 := NewState(nil)
 	defer L2.Close()
 	clo := L2.NewClosure(func(L2 *LState) int {
 		L2.Replace(UpvalueIndex(1), LNumber(3))
@@ -130,7 +125,7 @@ func TestGetAndReplace(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LString("a"))
 	L.Push(LString("b"))
@@ -163,7 +158,7 @@ func TestRemove(t *testing.T) {
 }
 
 func TestToInt(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -174,7 +169,7 @@ func TestToInt(t *testing.T) {
 }
 
 func TestToInt64(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -185,7 +180,7 @@ func TestToInt64(t *testing.T) {
 }
 
 func TestToNumber(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -196,7 +191,7 @@ func TestToNumber(t *testing.T) {
 }
 
 func TestToString(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -207,7 +202,7 @@ func TestToString(t *testing.T) {
 }
 
 func TestToTable(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -218,7 +213,7 @@ func TestToTable(t *testing.T) {
 }
 
 func TestToFunction(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -229,7 +224,7 @@ func TestToFunction(t *testing.T) {
 }
 
 func TestToUserData(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -240,7 +235,7 @@ func TestToUserData(t *testing.T) {
 }
 
 func TestToChannel(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Push(LNumber(10))
 	L.Push(LString("99.9"))
@@ -252,7 +247,7 @@ func TestToChannel(t *testing.T) {
 }
 
 func TestObjLen(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfNotEqual(t, 3, L.ObjLen(LString("abc")))
 	tbl := L.NewTable()
@@ -271,13 +266,13 @@ func TestObjLen(t *testing.T) {
 }
 
 func TestConcat(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errorIfNotEqual(t, "a1c", L.Concat(LString("a"), LNumber(1), LString("c")))
 }
 
 func TestPCall(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	L.Register("f1", func(L *LState) int {
 		panic("panic!")
@@ -305,7 +300,7 @@ func TestPCall(t *testing.T) {
 }
 
 func TestCoroutineApi1(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	co, _ := L.NewThread()
 	errorIfScriptFail(t, L, `
@@ -377,7 +372,7 @@ func TestCoroutineApi1(t *testing.T) {
 }
 
 func TestContextTimeout(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 	defer cancel()
@@ -400,7 +395,7 @@ func TestContextTimeout(t *testing.T) {
 }
 
 func TestContextCancel(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	ctx, cancel := context.WithCancel(context.Background())
 	errch := make(chan error, 1)
@@ -423,7 +418,7 @@ func TestContextCancel(t *testing.T) {
 }
 
 func TestContextWithCroutine(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	ctx, cancel := context.WithCancel(context.Background())
 	L.SetContext(ctx)
@@ -453,7 +448,7 @@ func TestContextWithCroutine(t *testing.T) {
 }
 
 func TestPCallAfterFail(t *testing.T) {
-	L := NewState()
+	L := NewState(nil)
 	defer L.Close()
 	errFn := L.NewFunction(func(L *LState) int {
 		L.RaiseError("error!")
@@ -473,7 +468,7 @@ func TestPCallAfterFail(t *testing.T) {
 }
 
 func TestRegistryFixedOverflow(t *testing.T) {
-	state := NewState()
+	state := NewState(nil)
 	defer state.Close()
 	reg := state.reg
 	expectedPanic := false
@@ -501,7 +496,7 @@ func TestRegistryFixedOverflow(t *testing.T) {
 }
 
 func TestRegistryAutoGrow(t *testing.T) {
-	state := NewState(Options{RegistryMaxSize: 300, RegistrySize: 200, RegistryGrowStep: 25})
+	state := NewState(nil)
 	defer state.Close()
 	expectedPanic := false
 	defer func() {
@@ -530,10 +525,7 @@ func TestRegistryAutoGrow(t *testing.T) {
 // directly to the reg's array, but crucially, before it had updated "top". This meant when the resize occurred, the
 // values beyond top where not copied, and were lost, leading to a later uninitialised value being found in the registry.
 func TestUninitializedVarAccess(t *testing.T) {
-	L := NewState(Options{
-		RegistrySize:    128,
-		RegistryMaxSize: 256,
-	})
+	L := NewState(nil)
 	defer L.Close()
 	// This test needs to trigger a resize when the local vars are allocated, so we need it to
 	// be 128 for the padding amount in the test function to work. If it's larger, we will need
