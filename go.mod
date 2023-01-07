@@ -1,4 +1,4 @@
-module github.com/vivi-app/lua
+module github.com/awirix/lua
 
 go 1.17
 

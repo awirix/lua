@@ -2,7 +2,7 @@
 package parse
 
 import (
-  "github.com/vivi-app/lua/ast"
+  "github.com/awirix/lua/ast"
 )
 %}
 %type<stmts> chunk

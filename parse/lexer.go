@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"github.com/vivi-app/lua/ast"
+	"github.com/awirix/lua/ast"
 	"io"
 	"reflect"
 	"strconv"

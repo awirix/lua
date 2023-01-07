@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"github.com/chzyer/readline"
-	"github.com/vivi-app/lua"
-	"github.com/vivi-app/lua/parse"
+	"github.com/awirix/lua"
+	"github.com/awirix/lua/parse"
 	"os"
 	"runtime/pprof"
 )

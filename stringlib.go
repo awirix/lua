@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/vivi-app/lua/pm"
+	"github.com/awirix/lua/pm"
 )
 
 const emptyLString LString = LString("")

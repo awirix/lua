@@ -12,7 +12,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/vivi-app/lua/parse"
+	"github.com/awirix/lua/parse"
 )
 
 const MultRet = -1

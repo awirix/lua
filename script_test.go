@@ -2,7 +2,7 @@ package lua
 
 import (
 	"fmt"
-	"github.com/vivi-app/lua/parse"
+	"github.com/awirix/lua/parse"
 	"os"
 	"runtime"
 	"sync/atomic"

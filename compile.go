@@ -2,7 +2,7 @@ package lua
 
 import (
 	"fmt"
-	"github.com/vivi-app/lua/ast"
+	"github.com/awirix/lua/ast"
 	"math"
 	"reflect"
 )

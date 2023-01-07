@@ -8,7 +8,7 @@ import __yyfmt__ "fmt"
 //line parser.go.y:2
 
 import (
-	"github.com/vivi-app/lua/ast"
+	"github.com/awirix/lua/ast"
 )
 
 //line parser.go.y:34
